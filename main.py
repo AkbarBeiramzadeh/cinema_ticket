@@ -1,6 +1,7 @@
 import json
 import os
 from user import User
+from manager import Manager
 import getpass
 import sys
 from datetime import datetime
@@ -57,25 +58,17 @@ def login():
         print("Invalid Name")
 
 
-def manager_menu():
-    print("Manager Menu")
-
-
 def login_manager():
-    if os.path.exists("manager.json"):
-        with open("manager.json", "r") as f:
-            manager_dict = json.load(f)
-        manager_name = input("Enter your Name:")
-        if manager_name not in manager_dict.keys():
-            print("Your Name is not in Manager list!!!")
-            return
-        password = input("Enter Password : ")
-        if password == manager_dict[manager_name]:
-            manager_menu()
-        else:
-            print("Wrong Password!!!")
+    manager_name = input("Enter your Name : ")
+    if not Manager.is_manger(manager_name):
+        print("Invalid manager name")
+        return
+    password = input("Enter Password : ")
+    if Manager.check_password(manager_name, password):
+        print("Manager Menu")
+        choice = input(">>> ")
     else:
-        print("There is no Manager!!!")
+        print("Wrong Password!!!")
 
 
 def main():
