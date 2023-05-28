@@ -47,3 +47,9 @@ class User:
             if user_name in cls.users_dict.keys():
                 return True
         return False
+
+    @classmethod
+    def check_password(cls, name, password):
+        if cls.users_dict[name]["password"] == password:
+            return True
+        return False
