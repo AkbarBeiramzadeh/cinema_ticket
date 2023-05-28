@@ -1,9 +1,31 @@
 import json
 import os
+from user import User
+import getpass
+import sys
+from datetime import datetime
 
 
 def register():
-    pass
+    """
+    This function is used for user registration.
+    The username should not be duplicated.
+    The entered password should be equal to or greater than 4 characters in length.
+    """
+    name = input("Enter Your Name :")
+    if User.is_user(name):
+        print("This Name is taken already")
+        return
+    password = getpass.getpass(stream=sys.stderr, prompt="Enter Password : ")
+    phone_number = input("Enter phone (optional): ")
+    register_date = datetime.now()
+    birth_date_str = input("Enter your birthday in the format YYYY-MM-DD : ")
+    birth_date = datetime.strptime(birth_date_str, '%Y-%m-%d')
+    try:
+        User.sign_up(name, password, birth_date, register_date, phone_number)
+        print("The User Registered Successfully!!!")
+    except Exception:
+        print("User not registered")
 
 
 def login():
@@ -29,7 +51,6 @@ def login_manager():
             print("Wrong Password!!!")
     else:
         print("There is no Manager!!!")
-
 
 
 def main():
