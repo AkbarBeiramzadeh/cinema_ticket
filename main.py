@@ -29,7 +29,30 @@ def register():
 
 
 def login():
-    pass
+    name = input("Enter Your Name : ")
+    if User.is_user(name):
+        password = getpass.getpass(stream=sys.stderr, prompt="Enter Password : ")
+        if User.check_password(name, password):
+            print("-" * 30, "\tLogin Menu", "-" * 30, sep="\n")
+            print("Please select an option:",
+                  "1. Show Your Specifications",
+                  "2. Edit",
+                  "3. Change Password",
+                  "4. Create Bank Account",
+                  "5. Show Bank Accounts",
+                  "6. Show Wallet",
+                  "7. Charge Wallet",
+                  "8. Show Cinema Sans",
+                  "9. Show my Cinema Sans",
+                  "10. Show my Cinema Ticket's info",
+                  "11. Buy Cinema Ticket",
+                  "12. Exit",
+                  sep="\n")
+            print("-" * 30)
+            choice = input(">>> ")
+
+    else:
+        print("Invalid Name")
 
 
 def manager_menu():
