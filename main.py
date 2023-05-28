@@ -1,3 +1,7 @@
+import json
+import os
+
+
 def register():
     pass
 
@@ -6,8 +10,26 @@ def login():
     pass
 
 
+def manager_menu():
+    print("Manager Menu")
+
+
 def login_manager():
-    pass
+    if os.path.exists("manager.json"):
+        with open("manager.json", "r") as f:
+            manager_dict = json.load(f)
+        manager_name = input("Enter your Name:")
+        if manager_name not in manager_dict.keys():
+            print("Your Name is not in Manager list!!!")
+            return
+        password = input("Enter Password : ")
+        if password == manager_dict[manager_name]:
+            manager_menu()
+        else:
+            print("Wrong Password!!!")
+    else:
+        print("There is no Manager!!!")
+
 
 
 def main():
