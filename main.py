@@ -65,8 +65,21 @@ def login_manager():
         return
     password = input("Enter Password : ")
     if Manager.check_password(manager_name, password):
-        print("Manager Menu")
+        print("-" * 30, "|\t  >>> Manager Menu <<<   |", "-" * 30, sep="\n")
+        print("Please select an option:",
+              "1. Show Movies",
+              "2. Create Movie",
+              "3. Exit",
+              sep="\n")
+        print("-" * 30)
         choice = input(">>> ")
+        match choice:
+            case "1":
+                pass
+            case "2":
+                pass
+            case "3":
+                return
     else:
         print("Wrong Password!!!")
 
