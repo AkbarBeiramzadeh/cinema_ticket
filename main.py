@@ -50,6 +50,8 @@ def login():
                   sep="\n")
             print("-" * 30)
             choice = input(">>> ")
+        else:
+            print("Wrong Password!!!")
 
     else:
         print("Invalid Name")
