@@ -1,4 +1,5 @@
 import json
+import os
 
 
 class Manager:
@@ -18,3 +19,21 @@ class Manager:
                 f.write(json_string)
             return cls(name, password)
         raise Exception("Error")
+
+    @classmethod
+    def is_manger(cls, name):
+        if os.path.exists("manager.json"):
+            with open("manager.json", "r") as f:
+                manager_dict = json.load(f)
+            if name in manager_dict.keys():
+                return True
+        return False
+
+    @classmethod
+    def check_password(cls, name, password):
+        if os.path.exists("manager.json"):
+            with open("manager.json", "r") as f:
+                manager_dict = json.load(f)
+            if manager_dict[name] == password:
+                return True
+        return False
