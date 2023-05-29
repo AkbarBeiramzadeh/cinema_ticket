@@ -16,12 +16,11 @@ class BankAccount:
 
     def __init__(self, id_user, balance, password, cvv2):
         self.id_user = id_user
-        self._balance = balance
+        self.balance = balance
         self.__password = password
         self.__cvv2 = cvv2
         self.id_bank_account = uuid4().hex()
-        type(self).bank_account_dict[self.id_bank_account] = self
-        type(self).bank_account_json_dict[self.id_bank_account] = {"bank account id": self.id_bank_account, "balance": balance, "password": password, "cvv2": cvv2}
+        type(self).__accounts.append(self)
 
 
     @staticmethod
@@ -36,9 +35,8 @@ class BankAccount:
     def balance_is_valid(cls, balance: int):
         if balance > cls.__min_balance:
             return True
-        print("The minimum balance is not enough")
-        return False 
-
+        else:
+            print("The minimum balance is not enough")
            
     
     def add_to_balance(self, amount):
@@ -77,15 +75,15 @@ class BankAccount:
         return False
 
 
-    @classmethod
-    def creat_bank_account(cls, id_user, balance, password, cvv2):
-        if cls.balance_is_valid(balance):
-            cls.user_bank_account_dict[id_user] = cls.bank_account_dict
-            cls.user_bank_account_json_dict[id_user]= cls.bank_account_json_dict
-            json_string = json.dumps(cls.user_bank_account_json_dict)
-            with open("bank_account.json", "w+") as f:
-                f.write(json_string)
-     
+    def creat_bank_account(self, id_user, balance, password, cvv2):
+                bank_account = type(self)(id_user, balance, password, cvv2)
+                type(self).bank_account_dict[self.id_bank_account] = bank_user
+                type(self).bank_account_json_dict[self.id_bank_account] = {"bank account id": self.id_bank_account, "balance": balance, "password": password, "cvv2": cvv2}
+                type(self).user_bank_account_dict[id_user] = type(self).bank_account_dict
+                type(self).user_bank_account_json_dict[id_user]= type(self).bank_account_json_dict
+                json_string = json.dumps(type(self).user_bank_account_json_dict)
+                with open("bank_account.json", "w+") as f:
+                    f.write(json_string)
 
 
 
