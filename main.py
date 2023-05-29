@@ -1,10 +1,11 @@
-import json
-import os
-from user import User
-from manager import Manager
-import getpass
-import sys
 from datetime import datetime
+import getpass
+import json
+import sys
+import os
+from BankAccount import BankAccount
+from manager import Manager
+from user import User
 
 
 def register():
@@ -29,9 +30,9 @@ def register():
         print("User not registered")
 
 
-def show_users_info():
+def show_users_info(name):
     """Mahsa"""
-    pass
+    User.show_info(name)
 
 
 def edit_user():
@@ -49,9 +50,9 @@ def change_password():
     pass
 
 
-def show_bank_account():
+def show_bank_account(name):
     """Mahsa"""
-    pass
+    BankAccount.show_my_accounts(name)
 
 
 def show_wallet():
@@ -59,9 +60,9 @@ def show_wallet():
     pass
 
 
-def charge_wallet():
+def charge_wallet(amount):
     """Mahsa"""
-    pass
+    BankAccount.add_to_balance(amount)
 
 
 def show_my_movies():
@@ -103,7 +104,7 @@ def login():
             choice = input(">>> ")
             match choice:
                 case "1":
-                    show_users_info()
+                    show_users_info(name)
                 case "2":
                     edit_user()
                 case "3":

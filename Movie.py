@@ -27,7 +27,7 @@ class Movie:
         # json_string = json.dumps(Movie.movies_dict)
         # with open("movies_dict.json", "w") as f:
         #     f.write(json_string)    
-        with open('movies_dict.json', 'w') as f:
+        with open('movies_dict.json', 'w+') as f:
             json.dump(cls.movies_dict, f)
     
 #   ********************************************************************************
