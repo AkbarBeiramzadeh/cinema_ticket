@@ -5,7 +5,9 @@ import sys
 import os
 from BankAccount import BankAccount
 from manager import Manager
-from user import User
+import getpass
+import sys
+from datetime import datetime
 
 
 def register():
@@ -40,9 +42,16 @@ def edit_user():
     pass
 
 
-def create_bank_account():
+def create_bank_account(name: str):
     """Akbar"""
-    pass
+    with open("users_json.json", "r") as f:
+        user_json = json.load(f)
+
+    id_user = user_json[name]["id_user"]
+    balance = int(input("Enter Balance : "))
+    password = input("Enter password : ")
+    cvv2 = input("Enter CVV2 : ")
+    BankAccount.creat_bank_account(id_user, balance, password, cvv2)
 
 
 def change_password():
@@ -94,8 +103,8 @@ def login():
                   "5. Show Bank Accounts",
                   "6. Show Wallet",
                   "7. Charge Wallet",
-                  "8. Show Cinema Sans",
-                  "9. Show my Cinema Sans",
+                  "8. Show Movies",
+                  "9. Show my Movies",
                   "10. Show my subscription_type",
                   "11. Buy_movie",
                   "12. Exit",
@@ -110,7 +119,7 @@ def login():
                 case "3":
                     change_password()
                 case "4":
-                    create_bank_account()
+                    create_bank_account(name)
                 case "5":
                     show_bank_account()
                 case "6":
@@ -138,10 +147,12 @@ def login():
 
 
 def show_movies():
+    """Mahsa"""
     pass
 
 
 def creat_movie():
+    """Hesel"""
     pass
 
 

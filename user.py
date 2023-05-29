@@ -14,7 +14,8 @@ class User:
         self.wallet = 0
         self.subscription = 0
         self.phone_number = phone_number
-        self.id_user = uuid4().hex
+        # if self.users_dict[name] in self.users_dict.keys():
+        #     self.id_user = self.users_dict[name]["id_user"]
 
     @classmethod
     def sign_up(cls, name, password, birth_date, register_date, phone_number=None):
@@ -23,11 +24,13 @@ class User:
         also validates the received values.
         """
         if name != "" and len(password) >= 4:
-            cls.users_dict[name] = {"password": password,
-                                    "birth_date": f"{birth_date.year}-{birth_date.month}-{birth_date.day}",
-                                    "register_date":
-                                        f"{register_date.year}-{register_date.month}-{register_date.day}",
-                                    "phone": phone_number}
+            cls.users_dict[name] = {
+                "id_user": uuid4().hex,
+                "password": password,
+                "birth_date": f"{birth_date.year}-{birth_date.month}-{birth_date.day}",
+                "register_date":
+                    f"{register_date.year}-{register_date.month}-{register_date.day}",
+                "phone": phone_number}
             # storing to the json file
             json_string = json.dumps(cls.users_dict)
             with open("users_json.json", "w+") as f:
