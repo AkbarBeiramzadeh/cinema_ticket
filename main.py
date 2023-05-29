@@ -34,9 +34,10 @@ def show_users_info():
     pass
 
 
-def edit_user():
-    """Hesel"""
-    pass
+def edit_user_and_phone_number(name):
+    new_name = input("Enter Your New Name :")
+    new_phone_number = input("Enter Your New Phone Number :")
+    User.change_username_and_phone_number(name, new_name)
 
 
 def create_bank_account():
@@ -105,7 +106,7 @@ def login():
                 case "1":
                     show_users_info()
                 case "2":
-                    edit_user()
+                    edit_user_and_phone_number(name)
                 case "3":
                     change_password()
                 case "4":
