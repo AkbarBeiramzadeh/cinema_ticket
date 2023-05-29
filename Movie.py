@@ -38,6 +38,15 @@ class Movie:
         for movie in movies:
             print(movie)  
 #   ********************************************************************************
+    @staticmethod
+    def show_my_movies(user): 
+        with open('movies.json', 'r') as f:
+            movies = json.load(f)
+        for movie in movies:
+            if movie.get('id_user') == user.id_user:
+                print(movie)   
+
+#   ********************************************************************************
     def buy_movie(self):
         
         if self.seats_capacity > 0:
