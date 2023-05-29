@@ -23,17 +23,15 @@ class BankAccount:
     def amount_is_valid(amount: int):
         if amount > 0:
             return True
-        print("The amount value is negative")
-        return False  
-
+        raise Exception("The amount value is negative")
+  
 
     @classmethod
     def balance_is_valid(cls, balance: int):
         if balance > cls.__min_balance:
             return True
-        else:
-            print("The minimum balance is not enough")
-           
+        raise Exception("The minimum balance is not enough")
+   
     
     def add_to_balance(self, amount):
         if type(self).amount_is_valid(amount):
@@ -44,8 +42,8 @@ class BankAccount:
         if type(self).amount_is_valid(amount):    
             if self._balance - amount > self.__min_balance:
                 self._balance -= amount
-            else:
-                print("balance is not enough")  
+            else:    
+                raise Exception("balance is not enough")  
 
 
     def transfer(self, other: "BankAccount", amount: int):
@@ -54,22 +52,20 @@ class BankAccount:
                 self._balance -=( amount + self.__commission)
                 other._balance += amount
             else:
-                print("balance is not enough")
+                raise Exception("balance is not enough")
 
 
     def password_validation(self, password):
         if self.__password == password:
             return True
-        print("The password is not valid")    
-        return False
+        raise Exception("The password is not valid")    
 
 
     def cvv2_validation(self, cvv2):
         if self.__cvv2 == cvv2:
             return True
-        print("The cvv2 is not valid")    
-        return False
-
+        raise Exception("The cvv2 is not valid")    
+     
 
     @classmethod
     def creat_bank_account(cls, id_user, balance, password, cvv2):
