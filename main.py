@@ -29,6 +29,56 @@ def register():
         print("User not registered")
 
 
+def show_users_info():
+    """Mahsa"""
+    pass
+
+
+def edit_user():
+    """Hesel"""
+    pass
+
+
+def create_bank_account():
+    """Akbar"""
+    pass
+
+
+def change_password():
+    """Hesel"""
+    pass
+
+
+def show_bank_account():
+    """Mahsa"""
+    pass
+
+
+def show_wallet():
+    """Akbar"""
+    pass
+
+
+def charge_wallet():
+    """Mahsa"""
+    pass
+
+
+def show_my_movies():
+    """Hesel"""
+    pass
+
+
+def show_my_subscription_type():
+    """Akbar"""
+    pass
+
+
+def buy_movie():
+    """Akbar"""
+    pass
+
+
 def login():
     name = input("Enter Your Name : ")
     if User.is_user(name):
@@ -45,17 +95,53 @@ def login():
                   "7. Charge Wallet",
                   "8. Show Cinema Sans",
                   "9. Show my Cinema Sans",
-                  "10. Show my Cinema Ticket's info",
-                  "11. Buy Cinema Ticket",
+                  "10. Show my subscription_type",
+                  "11. Buy_movie",
                   "12. Exit",
                   sep="\n")
             print("-" * 30)
             choice = input(">>> ")
+            match choice:
+                case "1":
+                    show_users_info()
+                case "2":
+                    edit_user()
+                case "3":
+                    change_password()
+                case "4":
+                    create_bank_account()
+                case "5":
+                    show_bank_account()
+                case "6":
+                    show_wallet()
+                case "7":
+                    charge_wallet()
+                case "8":
+                    show_movies()
+                case "9":
+                    show_my_movies()
+                case "10":
+                    show_my_subscription_type()
+                case "11":
+                    buy_movie()
+                case "12":
+                    return
+
+
+
         else:
             print("Wrong Password!!!")
 
     else:
         print("Invalid Name")
+
+
+def show_movies():
+    pass
+
+
+def creat_movie():
+    pass
 
 
 def login_manager():
@@ -75,9 +161,9 @@ def login_manager():
         choice = input(">>> ")
         match choice:
             case "1":
-                pass
+                show_movies()
             case "2":
-                pass
+                creat_movie()
             case "3":
                 return
     else:
