@@ -61,11 +61,12 @@ class User:
         """
         This function changes the username and phone number
         """  
-        if not cls.users_dict.keys(new_name):
+        if new_name not in cls.users_dict.keys():
             cls.users_dict[new_name] = cls.users_dict.pop(name)
-            cls.users_dict[new_name].name = new_name
-            cls.users_dict[new_name].phone_number = new_phone_number
+            cls.users_dict[new_name]["phone"] = new_phone_number
             json_string = json.dumps(cls.users_dict)
+            print(cls.users_dict)
             with open("users_json.json", "w+") as f:
                 f.write(json_string)
-        raise Exception("The name is exsist. try again")    
+        else:
+            raise Exception("The name is exsist. try again")    
