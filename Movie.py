@@ -4,7 +4,7 @@ import json
 # from users import User
 class Movie:
     
-    movies_list = {}
+    movies_dict = {}
     NOW = datetime.now()
     
     def __init__(self, id_manager, name: str, scr_date: datetime, seats_capacity: int, price: float, age_group: int) -> None:
@@ -15,19 +15,28 @@ class Movie:
         self.seats_capacity = seats_capacity
         self.price = price
         self.age_group = age_group
-        self.id_movie = uuid4().hex()
+        self.id_movie = uuid4().hex
 
 
     @classmethod
     def create_movie(cls,id_manager, name: str, scr_date: datetime, seats_capacity: int, price: float, age_group: int):
         new_movie = cls(id_manager, name, scr_date, seats_capacity, price, age_group)
-        cls.movies_list[new_movie.id_movie] = new_movie
+        cls.movies_dict[new_movie.id_movie] = new_movie
         
         # storing in json file (??)
-        json_string = json.dumps(Movie.movies_list)
-        with open("movies_list.json", "w") as f:
-            f.write(json_string)
+        # json_string = json.dumps(Movie.movies_dict)
+        # with open("movies_dict.json", "w") as f:
+        #     f.write(json_string)    
+        with open('movies_dict.json', 'w') as f:
+            json.dump(cls.movies_dict, f)
     
+#   ********************************************************************************
+    @staticmethod
+    def show_movies(): 
+        with open('movies.json', 'r') as f:
+            movies = json.load(f)
+        for movie in movies:
+            print(movie)  
 #   ********************************************************************************
     def buy_movie(self):
         
