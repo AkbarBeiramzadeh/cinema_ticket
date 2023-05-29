@@ -36,9 +36,13 @@ def show_users_info():
     pass
 
 
-def edit_user():
+def edit_user(name):
     """Hesel"""
-    pass
+    new_name = input("Enter Your New Name :")
+    new_phone_number = input("Enter Your New Phone Number :")
+    if new_phone_number == "":
+            new_phone_number = None    
+    User.change_username_and_phone_number(name, new_name, new_phone_number)
 
 
 def create_bank_account(name: str):
