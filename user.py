@@ -53,3 +53,19 @@ class User:
         if cls.users_dict[name]["password"] == password:
             return True
         return False
+
+
+    @classmethod
+    def change_username_and_phone_number(cls, name, new_name, new_phone_number= None):
+
+        """
+        This function changes the username and phone number
+        """  
+        if not cls.users_dict.keys(new_name):
+            cls.users_dict[new_name] = cls.users_dict.pop(name)
+            cls.users_dict[new_name].name = new_name
+            cls.users_dict[new_name].phone_number = new_phone_number
+            json_string = json.dumps(cls.users_dict)
+            with open("users_json.json", "w+") as f:
+                f.write(json_string)
+        raise Exception("The name is exsist. try again")    
