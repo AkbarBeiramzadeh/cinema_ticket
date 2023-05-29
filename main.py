@@ -2,6 +2,8 @@ import json
 import os
 from user import User
 from manager import Manager
+from BankAccount import BankAccount
+from Movie import Movie
 import getpass
 import sys
 from datetime import datetime
@@ -39,9 +41,16 @@ def edit_user():
     pass
 
 
-def create_bank_account():
+def create_bank_account(name: str):
     """Akbar"""
-    pass
+    with open("users_json.json", "r") as f:
+        user_json = json.load(f)
+
+    id_user = user_json[name]["id_user"]
+    balance = int(input("Enter Balance : "))
+    password = input("Enter password : ")
+    cvv2 = input("Enter CVV2 : ")
+    BankAccount.creat_bank_account(id_user, balance, password, cvv2)
 
 
 def change_password():
@@ -109,7 +118,7 @@ def login():
                 case "3":
                     change_password()
                 case "4":
-                    create_bank_account()
+                    create_bank_account(name)
                 case "5":
                     show_bank_account()
                 case "6":
