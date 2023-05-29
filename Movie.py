@@ -33,14 +33,14 @@ class Movie:
 #   ********************************************************************************
     @staticmethod
     def show_movies(): 
-        with open('movies.json', 'r') as f:
+        with open('movies_dict.json', 'r') as f:
             movies = json.load(f)
         for movie in movies:
             print(movie)  
 #   ********************************************************************************
     @staticmethod
     def show_my_movies(user): 
-        with open('movies.json', 'r') as f:
+        with open('movies_dict.json', 'r') as f:
             movies = json.load(f)
         for movie in movies:
             if movie.get('id_user') == user.id_user:
