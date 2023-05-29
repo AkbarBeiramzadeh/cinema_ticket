@@ -53,9 +53,12 @@ def create_bank_account(name: str):
     BankAccount.creat_bank_account(id_user, balance, password, cvv2)
 
 
-def change_password():
+def change_password(name):
     """Hesel"""
-    pass
+    password = getpass.getpass(stream=sys.stderr, prompt="Enter Password : ")
+    new_password = getpass.getpass(stream=sys.stderr, prompt="Enter New_Password : ")
+    re_new_password = getpass.getpass(stream=sys.stderr, prompt="Enter Re_New_Password : ")
+    User.change_password(name, password, new_password, re_new_password)
 
 
 def show_bank_account():
@@ -116,7 +119,7 @@ def login():
                 case "2":
                     edit_user()
                 case "3":
-                    change_password()
+                    change_password(name)
                 case "4":
                     create_bank_account(name)
                 case "5":
