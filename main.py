@@ -93,8 +93,8 @@ def login():
                   "5. Show Bank Accounts",
                   "6. Show Wallet",
                   "7. Charge Wallet",
-                  "8. Show Cinema Sans",
-                  "9. Show my Cinema Sans",
+                  "8. Show Movies",
+                  "9. Show my Movies",
                   "10. Show my subscription_type",
                   "11. Buy_movie",
                   "12. Exit",
@@ -137,10 +137,12 @@ def login():
 
 
 def show_movies():
+    """Mahsa"""
     pass
 
 
 def creat_movie():
+    """Hesel"""
     pass
 
 
