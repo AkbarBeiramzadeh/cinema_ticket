@@ -63,7 +63,8 @@ def change_password():
 
 def show_bank_account(name):
     """Mahsa"""
-    BankAccount.show_my_accounts(name)
+    
+    # BankAccount.show_my_accounts(user,amount)
 
 
 def show_wallet():
@@ -71,10 +72,14 @@ def show_wallet():
     pass
 
 
-def charge_wallet(amount):
+def charge_wallet(name):
     """Mahsa"""
-    BankAccount.add_to_balance(amount)
-
+    with open("users_json.json", "r") as f:
+        user_json = json.load(f)
+        
+    user = user_json[name]
+    amount = input("How much do you wanna charge your wallet? ")
+    BankAccount.sub_from_balance(user, amount)
 
 def show_my_movies():
     """Hesel"""
