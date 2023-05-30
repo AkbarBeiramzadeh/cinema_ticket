@@ -1,7 +1,7 @@
 from uuid import uuid4 
 from datetime import datetime
 import json
-# from users import User
+from user import User
 class Movie:
     
     movies_dict = {}
@@ -19,14 +19,11 @@ class Movie:
 
 
     @classmethod
-    def create_movie(cls,id_manager, name: str, scr_date: datetime, seats_capacity: int, price: float, age_group: int):
-        new_movie = cls(id_manager, name, scr_date, seats_capacity, price, age_group)
+    def create_movie(cls,id_manager, movie_name: str, scr_date: datetime, seats_capacity: int, price: float, age_group: int):
+        new_movie = cls(id_manager, movie_name, scr_date, seats_capacity, price, age_group)
         cls.movies_dict[new_movie.id_movie] = new_movie
         
-        # storing in json file (??)
-        # json_string = json.dumps(Movie.movies_dict)
-        # with open("movies_dict.json", "w") as f:
-        #     f.write(json_string)    
+        # storing in json file   
         with open('movies_dict.json', 'w+') as f:
             json.dump(cls.movies_dict, f)
     
@@ -40,30 +37,16 @@ class Movie:
 #   ********************************************************************************
     @staticmethod
     def show_my_movies(user): 
-        with open('movies_dict.json', 'r') as f:
-            movies = json.load(f)
-        for movie in movies:
-            if movie.get('id_user') == user.id_user:
-                print(movie)   
+  
 
 #   ********************************************************************************
-    def buy_movie(self):
-        if self.check_age == False:
-            raise Exception("This movie isn't appropriate for you")
-        if self.check_capacity == False:
-            raise Exception("all tickets have been sold!")
-        if self.check_time == False:
-            raise Exception("screening date has passed!")
+    def buy_movie(self, id_user):
         
-        # sub from wallet and buy a ticket??
-        if self.seats_capacity > 0:
-            self.seats_capacity -= 1
-            return True
 
         
 #   ******************************************************************************** 
     
-    def apply_discount(self, user):
+    def apply_discount():
         
         month_passed = self.NOW.month - user.register_date.month
         self.price = (1 - month_passed) * self.price 
@@ -75,33 +58,18 @@ class Movie:
     
 #   *********************************************************************************
     
-    def check_time(self):
+    def check_time():
         
-        if self.NOW > self.scr_date:
-            # print("screening date has passed!")
-            return False
-        
-        return True
+     
             
 #   *********************************************************************************           
        
-    def check_capacity(self):
-        
-        if self.seats_capacity == 0:
-            # print("all tickets have been sold!")
-            return False
-            
-        return True
+    def check_capacity():
         
 #   *********************************************************************************
     @classmethod   
-    def check_age(cls,user):
-        
-        age = cls.NOW.year - user.birth_date.year
-        if age < cls.age_group:
-            # print("This movie isn't appropriate for you")
-            return False
-        return True
+    def check_age():
+    
         
                
     
