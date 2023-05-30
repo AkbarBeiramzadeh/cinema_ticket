@@ -48,11 +48,18 @@ class Movie:
 
 #   ********************************************************************************
     def buy_movie(self):
+        if self.check_age == False:
+            raise Exception("This movie isn't appropriate for you")
+        if self.check_capacity == False:
+            raise Exception("all tickets have been sold!")
+        if self.check_time == False:
+            raise Exception("screening date has passed!")
         
+        # sub from wallet and buy a ticket??
         if self.seats_capacity > 0:
             self.seats_capacity -= 1
-        else:
-            self.seats_capacity = 0
+            return True
+
         
 #   ******************************************************************************** 
     
@@ -71,14 +78,18 @@ class Movie:
     def check_time(self):
         
         if self.NOW > self.scr_date:
-            print("screening date has passed!")
+            # print("screening date has passed!")
+            return False
+        
+        return True
             
 #   *********************************************************************************           
        
     def check_capacity(self):
         
         if self.seats_capacity == 0:
-            print("all tickets have been sold!")
+            # print("all tickets have been sold!")
+            return False
             
         return True
         
@@ -88,7 +99,9 @@ class Movie:
         
         age = cls.NOW.year - user.birth_date.year
         if age < cls.age_group:
-            print("This movie isn't appropriate for you")
+            # print("This movie isn't appropriate for you")
+            return False
+        return True
         
                
     
