@@ -5,7 +5,9 @@ import sys
 import os
 from BankAccount import BankAccount
 from manager import Manager
+from Movie import Movie
 from user import User
+
 
 
 def register():
@@ -35,8 +37,8 @@ def show_users_info(name):
     with open("users_json.json", "r") as f:
         user_json = json.load(f)
         
-    id_user = user_json[name]["id_user"]
-    User.show_info(id_user)  
+    user = user_json[name]
+    User.show_info(user)            # undefined method
 
 
 def edit_user():
@@ -155,7 +157,8 @@ def login():
 
 def show_movies():
     """Mahsa"""
-    pass
+    print("on screen movies: ")
+    Movie.show_movies()
 
 
 def creat_movie():
