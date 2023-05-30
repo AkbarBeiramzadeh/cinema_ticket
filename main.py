@@ -7,6 +7,23 @@ from Movie import Movie
 import getpass
 import sys
 from datetime import datetime
+import logging, logging.config
+
+#logging.config.fileConfig("log.ini")
+pattern = logging.Formatter("%(asctime)s - %(levelname)s - %(lineno)d - %(msg)s")
+
+
+logger = logging.getLogger("MyLogger")
+logging.basicConfig(level=logging.INFO, filename="cinematicket.log", filemode="w")
+
+file_handler = logging.FileHandler("cinematicket.log", mode="a")
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+console_handler.setFormatter(pattern)
+file_handler.setFormatter(pattern)
+
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
 
 
 def register():
@@ -17,7 +34,7 @@ def register():
     """
     name = input("Enter Your Name :")
     if User.is_user(name):
-        print("This Name is taken already")
+        logger.error("This Name is taken already")
         return
     password = getpass.getpass(stream=sys.stderr, prompt="Enter Password : ")
     phone_number = input("Enter phone (optional): ")
@@ -26,9 +43,9 @@ def register():
     birth_date = datetime.strptime(birth_date_str, '%Y-%m-%d')
     try:
         User.sign_up(name, password, birth_date, register_date, phone_number)
-        print("The User Registered Successfully!!!")
+        logger.info("The User Registered Successfully!!!")
     except Exception:
-        print("User not registered")
+        logger.error("User not registered")
 
 
 def show_users_info():
@@ -165,7 +182,7 @@ def creat_movie():
 def login_manager():
     manager_name = input("Enter your Name : ")
     if not Manager.is_manger(manager_name):
-        print("Invalid manager name")
+        logger.error("Invalid manager name")
         return
     password = input("Enter Password : ")
     if Manager.check_password(manager_name, password):
@@ -185,7 +202,7 @@ def login_manager():
             case "3":
                 return
     else:
-        print("Wrong Password!!!")
+        logger.error("Choose an action!")
 
 
 def main():
