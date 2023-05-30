@@ -41,9 +41,13 @@ def show_users_info(name):
     User.show_info(user)            # undefined method
 
 
-def edit_user():
+def edit_user(name):
     """Hesel"""
-    pass
+    new_name = input("Enter Your New Name :")
+    new_phone_number = input("Enter Your New Phone Number :")
+    if new_phone_number == "":
+            new_phone_number = None    
+    User.change_username_and_phone_number(name, new_name, new_phone_number)
 
 
 def create_bank_account(name: str):
@@ -58,9 +62,12 @@ def create_bank_account(name: str):
     BankAccount.creat_bank_account(id_user, balance, password, cvv2)
 
 
-def change_password():
+def change_password(name):
     """Hesel"""
-    pass
+    password = getpass.getpass(stream=sys.stderr, prompt="Enter Password : ")
+    new_password = getpass.getpass(stream=sys.stderr, prompt="Enter New_Password : ")
+    re_new_password = getpass.getpass(stream=sys.stderr, prompt="Enter Re_New_Password : ")
+    User.change_password(name, password, new_password, re_new_password)
 
 
 def show_bank_account(name):
@@ -126,7 +133,7 @@ def login():
                 case "2":
                     edit_user()
                 case "3":
-                    change_password()
+                    change_password(name)
                 case "4":
                     create_bank_account(name)
                 case "5":
