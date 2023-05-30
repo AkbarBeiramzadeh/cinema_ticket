@@ -5,9 +5,7 @@ import sys
 import os
 from BankAccount import BankAccount
 from manager import Manager
-import getpass
-import sys
-from datetime import datetime
+from user import User
 
 
 def register():
@@ -34,7 +32,11 @@ def register():
 
 def show_users_info(name):
     """Mahsa"""
-    User.show_info(name)
+    with open("users_json.json", "r") as f:
+        user_json = json.load(f)
+        
+    id_user = user_json[name]["id_user"]
+    User.show_info(id_user)  
 
 
 def edit_user():
