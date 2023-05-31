@@ -5,6 +5,7 @@ import os
 
 class User:
     users_dict = {}
+    users_movies = {}
     subscription = ["Boronz", "Silver", "Gold"]
 
     def __init__(self, name, password, birth_date, register_date, phone_number=None):
@@ -34,6 +35,13 @@ class User:
                 "wallet": 0,
                 "subscription": "Boronz",
                 "phone": phone_number}
+
+            # creating users_movie json -----------
+            with open('users_movies.json', 'w+') as f3:
+                cls.users_movies[name] = []
+                json.dump(cls.users_movies, f3)
+            # -------------------------------------
+
             # storing to the json file
             json_string = json.dumps(cls.users_dict)
             with open("users_json.json", "w+") as f:
@@ -71,3 +79,34 @@ class User:
         with open("users_json.json", "r") as f:
             user_json = json.load(f)
         return user_json[name]["subscription"]
+
+    @classmethod
+    def change_username_and_phone_number(cls, name, new_name, new_phone_number=None):
+
+        """
+        This function changes the username and phone number
+        """
+        if new_name not in cls.users_dict.keys():
+            cls.users_dict[new_name] = cls.users_dict.pop(name)
+            cls.users_dict[new_name]["phone"] = new_phone_number
+            name = new_name
+            json_string = json.dumps(cls.users_dict)
+            with open("users_json.json", "w+") as f:
+                f.write(json_string)
+        else:
+            raise Exception("The name is exsist. try again")
+
+    @classmethod
+    def change_password(cls, name, password, new_password, re_new_password):
+        if cls.check_password(name, password):
+            if len(new_password) >= 4:
+                if new_password == re_new_password:
+                    password = new_password
+                    cls.users_dict[name]["password"] == password
+                    json_string = json.dumps(cls.users_dict)
+                    with open("users_json.json", "w+") as f:
+                        f.write(json_string)
+                else:
+                    raise Exception("new_password and re_new_password is not equal")
+            else:
+                raise Exception("Enter at least four characters for password")
