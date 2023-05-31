@@ -57,3 +57,10 @@ class User:
         if cls.users_dict[name]["password"] == password:
             return True
         return False
+
+    @staticmethod
+    def show_wallet(name):
+        with open("users_json.json", "r") as f:
+            user_json = json.load(f)
+        return user_json[name]["wallet"]
+
