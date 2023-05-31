@@ -63,10 +63,12 @@ class Movie:
         
         price = cls.apply_discount
         user["wallet"] -= price
+        user_json[name] = user
         with open('users_json.json', 'w') as f1:
             json.dump(user_json, f1)
             
         movie["seats_capacity"] -= 1
+        movies[movie_name] = movie
         with open('movies_dict.json', 'w') as f2:
             json.dump(movies, f2)   
     
