@@ -105,7 +105,7 @@ def charge_wallet(name):
             f2.write(users_string)
 
 
-def show_my_movies():
+def show_my_movies(name):
     """Hesel"""
     with open("users_json.json", "r") as f:
         user_json = json.load(f)
@@ -150,23 +150,23 @@ def login():
             choice = input(">>> ")
             match choice:
                 case "1":
-                    show_users_info()
+                    show_users_info(name)
                 case "2":
-                    edit_user()
+                    edit_user(name)
                 case "3":
                     change_password(name)
                 case "4":
                     create_bank_account(name)
                 case "5":
-                    show_bank_account()
+                    show_bank_account(name)
                 case "6":
                     show_wallet(name)
                 case "7":
-                    charge_wallet()
+                    charge_wallet(name)
                 case "8":
                     show_movies()
                 case "9":
-                    show_my_movies()
+                    show_my_movies(name)
                 case "10":
                     show_my_subscription_type(name)
                 case "11":
@@ -222,7 +222,7 @@ def login_manager():
             case "1":
                 show_movies()
             case "2":
-                creat_movie()
+                creat_movie(manager_name)
             case "3":
                 return
     else:
