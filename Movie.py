@@ -2,6 +2,20 @@ from uuid import uuid4
 from datetime import datetime
 import json
 from user import User
+import logging
+
+logging.basicConfig(level=logging.INFO, filename="cinematicket.log",
+                    format="%(asctime)s - %(levelname)s - %(lineno)d - %(msg)s")
+logger = logging.getLogger("Movie")
+
+file_handler = logging.FileHandler("cinematicket.log")
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+pattern = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(msg)s")
+console_handler.setFormatter(pattern)
+file_handler.setFormatter(pattern)
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
 
 
 class DateTimeEncoder(json.JSONEncoder):
@@ -57,10 +71,13 @@ class Movie:
             movie = movies[movie_name]
 
         if cls.check_capacity(movie) == False:
+            logger.error("Sold out")
             raise Exception("all tickets have been sold")
         if cls.check_time == False:
+            logger.error("passed time")
             raise Exception("screening time has passed")
         if cls.check_age(user, movie) == False:
+            logger.error("not appropriate")
             raise Exception("this movie isn't appropriate for you")
 
         price = cls.apply_discount
