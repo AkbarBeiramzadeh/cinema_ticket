@@ -1,5 +1,6 @@
 from uuid import uuid4
 import json
+import os
 
 
 class BankAccount:
@@ -11,10 +12,10 @@ class BankAccount:
     user_bank_account_dict = {}
 
 
-    def __init__(self, id_user, balance, password, cvv2):
+    def __init__(self, id_user, balance, bank_password, cvv2: int):
         self.id_user = id_user
         self._balance = balance
-        self.__password = password
+        self.__bank_password = bank_password
         self.__cvv2 = cvv2
         self.id_bank_account = uuid4().hex
 
@@ -23,16 +24,34 @@ class BankAccount:
     def amount_is_valid(amount: int):
         if amount > 0:
             return True
-        raise Exception("The amount value is negative")
+        else:
+            raise Exception("The amount value is negative")
   
 
     @classmethod
     def balance_is_valid(cls, balance: int):
         if balance > cls.__min_balance:
             return True
-        raise Exception("The minimum balance is not enough")
-   
-    
+        else:
+            raise Exception("The minimum balance is not enough")
+
+
+    @classmethod
+    def add_to_balance(cls, id_user, id_bank_account, bank_password, cvv2, amount):
+        if cls.check_bank_password_and_cvv2_and_id_bank_account_validity(id_user, id_bank_account, bank_password, cvv2):
+            with open("bank_account.json", "r") as f:
+                bank_account_of_user_json = json.load(f)
+                balance = bank_account_of_user_json[id_user][id_bank_account]["balance"]
+            if cls.amount_is_valid(amount):
+                    balance += amount                 
+                    bank_account_of_user_json[id_user][id_bank_account]["balance"] = balance
+                    creat_bank_account_json_string = json.dumps(bank_account_of_user_json)
+                    with open("bank_account.json", "w+") as f:
+                        f.write(creat_bank_account_json_string) 
+            else:    
+                    raise Exception("balance is not enough") 
+                    
+
     def add_to_balance(self, amount):
         if type(self).amount_is_valid(amount):
             self._balance += amount
