@@ -132,7 +132,7 @@ class Movie:
         
         NOW = datetime.now()
         by,m,d = user["birth_date"].split("-")
-        age = NOW.year - by
+        age = NOW.year - int(by)
         
         if age < movie["age_group"]:
             return False
