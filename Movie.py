@@ -83,9 +83,7 @@ class Movie:
         
         for each in users_movies:
             if each == name:
-                print(users_movies[each])
-  
-
+                print(users_movies[each]) 
  #   ********************************************************************************
     @staticmethod
     def show_movies(): 
