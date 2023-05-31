@@ -50,7 +50,24 @@ class BankAccount:
                         f.write(creat_bank_account_json_string) 
             else:    
                     raise Exception("balance is not enough") 
-                    
+
+
+    @classmethod
+    def sub_from_balance(cls, id_user, id_bank_account, bank_password, cvv2, amount):
+        if cls.check_bank_password_and_cvv2_and_id_bank_account_validity(id_user, id_bank_account, bank_password, cvv2):
+            with open("bank_account.json", "r") as f:
+                bank_account_of_user_json = json.load(f)
+                balance = bank_account_of_user_json[id_user][id_bank_account]["balance"]
+            if cls.amount_is_valid(amount):
+                if balance - amount > cls.__min_balance:
+                    balance -= amount                 
+                    bank_account_of_user_json[id_user][id_bank_account]["balance"] = balance
+                    creat_bank_account_json_string = json.dumps(bank_account_of_user_json)
+                    with open("bank_account.json", "w+") as f:
+                        f.write(creat_bank_account_json_string) 
+                else:    
+                    raise Exception("balance is not enough") 
+
 
     def add_to_balance(self, amount):
         if type(self).amount_is_valid(amount):
