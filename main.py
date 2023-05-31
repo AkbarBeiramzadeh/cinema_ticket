@@ -34,11 +34,11 @@ def register():
 
 def show_users_info(name):
     """Mahsa"""
-    # with open("users_json.json", "r") as f:
-    #     user_json = json.load(f)
+    with open("users_json.json", "r") as f:
+        user_json = json.load(f)
 
-    # id_user = user_json[name]["id_user"]
-    # User.show_info(id_user)            # undefined method
+    id_user = user_json[name]["id_user"]
+    User.show_info(id_user)            # undefined method
 
 
 def edit_user(name):
