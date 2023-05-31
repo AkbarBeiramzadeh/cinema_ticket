@@ -88,16 +88,26 @@ class BankAccount:
                     raise Exception("balance is not enough") 
 
 
-    def password_validation(self, password):
-        if self.__password == password:
-            return True
-        raise Exception("The password is not valid")    
-
-
-    def cvv2_validation(self, cvv2):
-        if self.__cvv2 == cvv2:
-            return True
-        raise Exception("The cvv2 is not valid")    
+    @classmethod
+    def check_bank_password_and_cvv2_and_id_bank_account_validity(
+        cls, id_user, id_bank_account, bank_password, cvv2):
+        if os.path.exists("bank_account.json"):
+            with open("bank_account.json", "r") as f:
+                bank_account_of_user_json = json.load(f)
+            if id_user in bank_account_of_user_json.keys():
+                if id_bank_account in bank_account_of_user_json[id_user]:
+                    if bank_password == bank_account_of_user_json[id_user][id_bank_account]["bank_password"]:
+                        if cvv2 == bank_account_of_user_json[id_user][id_bank_account]["cvv2"]:
+                            balance = bank_account_of_user_json[id_user][id_bank_account]["balance"]
+                            return True
+                        else:
+                            raise Exception("The cvv2 is not valid")     
+                    else:
+                        raise Exception("The password is not valid")
+                else:
+                    raise Exception("The id_bankaccount is not valid")
+            else:
+                raise Exception("You have not Bank Account") 
      
 
     @classmethod
