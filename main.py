@@ -31,9 +31,13 @@ def register():
         print("User not registered")
 
 
-def show_users_info():
+def show_users_info(name):
     """Mahsa"""
-    pass
+    with open("users_json.json", "r") as f:
+        user_json = json.load(f)
+
+    id_user = user_json[name]["id_user"]
+    User.show_info(id_user)  # undefined method
 
 
 def edit_user(name):
@@ -41,7 +45,9 @@ def edit_user(name):
     new_name = input("Enter Your New Name :")
     new_phone_number = input("Enter Your New Phone Number :")
     if new_phone_number == "":
-            new_phone_number = None    
+
+        new_phone_number = None
+
     User.change_username_and_phone_number(name, new_name, new_phone_number)
 
 
@@ -65,7 +71,8 @@ def change_password(name):
 
 
 def show_bank_account(name):
-    """Shows list of user's bank accounts""" 
+    """Shows list of user's bank accounts"""
+
     with open("users_json.json", "r") as f:
         user_json = json.load(f)
 
@@ -75,7 +82,7 @@ def show_bank_account(name):
 
 def show_wallet(name: str):
     """Akbar"""
-    print(User.show_wallet(name)) 
+    print(User.show_wallet(name))
 
 
 def charge_wallet(name):
@@ -87,22 +94,22 @@ def charge_wallet(name):
     cvv2 = input("Entr cvv2:")
     with open("users_json.json", "r") as f:
         user_json = json.load(f)
-    id_user = user_json[name]["id_user"]            
+    id_user = user_json[name]["id_user"]
     with open("users_json.json", "r") as f2:
         users = json.load(f2)
         if users[name] == name:
-            wallet = users[name]["wallet"]                     
+            wallet = users[name]["wallet"]
             new_wallet = BankAccount.transfer(wallet, id_user, id_bank_account, bank_password, cvv2, amount)
             users[name]["wallet"] = new_wallet
-            users_string = json.dumps(users)  
-            f2.write(users_string)     
+            users_string = json.dumps(users)
+            f2.write(users_string)
 
 
-def show_my_movies():
+def show_my_movies(name):
     """Hesel"""
     with open("users_json.json", "r") as f:
         user_json = json.load(f)
-    id_user = user_json[name]["id_user"]    
+    id_user = user_json[name]["id_user"]
     Movie.show_my_movies(id_user)
 
 
@@ -116,7 +123,7 @@ def buy_movie(name):
     show_movies()
     print("Enter the name of the movie you want ")
     film_name = input("film_name : ")
-    Movie.buy_movie(name,film_name)
+    Movie.buy_movie(name, film_name)
 
 
 def login():
@@ -143,25 +150,25 @@ def login():
             choice = input(">>> ")
             match choice:
                 case "1":
-                    show_users_info()
+                    show_users_info(name)
                 case "2":
-                    edit_user_and_phone_number(name)
+                    edit_user(name)
                 case "3":
                     change_password(name)
                 case "4":
                     create_bank_account()
                 case "5":
-                    show_bank_account()
+                    show_bank_account(name)
                 case "6":
-                    show_wallet()
+                    show_wallet(name)
                 case "7":
-                    charge_wallet()
+                    charge_wallet(name)
                 case "8":
                     show_movies()
                 case "9":
-                    show_my_movies()
+                    show_my_movies(name)
                 case "10":
-                    show_my_subscription_type()
+                    show_my_subscription_type(name)
                 case "11":
                     buy_movie()
                 case "12":
@@ -175,21 +182,21 @@ def login():
 
 
 def show_movies():
-    """Mahsa"""
-    pass
+    """Shows list of available movies"""
+    Movie.show_movies()
 
 
 def creat_movie(manager_name):
     """Hesel"""
     with open("manager.json", "r") as f:
         manager_informations_json = json.load(f)
-    id_manager = manager_informations_json[manager_name]["id_manager"] 
+    id_manager = manager_informations_json[manager_name]["id_manager"]
     movie_name = input("Enter movie_name: ")
     scr_date = datetime.strptime(
-    input("Enter Screening_datetime with 'yyyy-mm-dd  hh:mm:ss' format: "), '%Y-%m-%d %H:%M:%S'
-    ) 
+        input("Enter Screening_datetime with 'yyyy-mm-dd  hh:mm:ss' format: "), '%Y-%m-%d %H:%M:%S'
+    )
     seats_capacity = int(input("Enter seats_capacity: "))
-    price = float(input("Enter price of movie: ")) 
+    price = float(input("Enter price of movie: "))
     age_group = int(input("Enter age_group limitation for the movie: "))
     Movie.create_movie(id_manager, movie_name, scr_date, seats_capacity, price, age_group)
 
@@ -213,7 +220,7 @@ def login_manager():
             case "1":
                 show_movies()
             case "2":
-                creat_movie()
+                creat_movie(manager_name)
             case "3":
                 return
     else:
