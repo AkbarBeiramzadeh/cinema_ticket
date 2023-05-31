@@ -47,7 +47,6 @@ def create_bank_account():
     """Akbar"""
     with open("users_json.json", "r") as f:
         user_json = json.load(f)
-
     id_user = user_json[name]["id_user"]
     balance = int(input("Enter Balance : "))
     password = input("Enter password : ")
@@ -60,14 +59,6 @@ def change_password(name):
     password = getpass.getpass(stream=sys.stderr, prompt="Enter Password : ")
     new_password = getpass.getpass(stream=sys.stderr, prompt="Enter New_Password : ")
     re_new_password = getpass.getpass(stream=sys.stderr, prompt="Enter Re_New_Password : ")
-    User.change_password(name, password, new_password, re_new_password)
-
-
-
-def change_password(name):
-    password = getpass.getpass(stream=sys.stderr, prompt="Enter Password : ")
-    new_password = getpass.getpass(stream=sys.stderr, prompt="Enter New Password : ")
-    re_new_password = getpass.getpass(stream=sys.stderr, prompt="Enter Re New Password : ")
     User.change_password(name, password, new_password, re_new_password)
 
 
@@ -150,10 +141,8 @@ def login():
                     return
 
 
-
         else:
             print("Wrong Password!!!")
-
     else:
         print("Invalid Name")
 
