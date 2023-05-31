@@ -72,9 +72,10 @@ class Movie:
     
     # adding movie to users movies list  
         with open("users_json.json", "r") as f3:
-             my_dict = json.load(f3)  
-             list_movies = my_dict[name]
-             list_movies.append(movie_name)  
+            my_dict = json.load(f3)  
+            list_movies = my_dict[name]
+            list_movies.append(movie_name) 
+            my_dict[name] = list_movies
         with open('users_movies.json', 'w') as f3:    
             json.dump(my_dict, f3)       
 #   ********************************************************************************
