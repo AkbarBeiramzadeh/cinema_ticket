@@ -63,9 +63,9 @@ def show_bank_account():
     pass
 
 
-def show_wallet():
+def show_wallet(name: str):
     """Akbar"""
-    pass
+    print(User.show_wallet(name))
 
 
 def charge_wallet():
@@ -122,7 +122,7 @@ def login():
                 case "5":
                     show_bank_account()
                 case "6":
-                    show_wallet()
+                    show_wallet(name)
                 case "7":
                     charge_wallet()
                 case "8":
