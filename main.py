@@ -34,15 +34,44 @@ def show_users_info():
     pass
 
 
+<<<<<<< HEAD
 def edit_user_and_phone_number(name):
     new_name = input("Enter Your New Name :")
     new_phone_number = input("Enter Your New Phone Number :")
     User.change_username_and_phone_number(name, new_name)
+=======
+def edit_user(name):
+    """Hesel"""
+    new_name = input("Enter Your New Name :")
+    new_phone_number = input("Enter Your New Phone Number :")
+    if new_phone_number == "":
+            new_phone_number = None    
+    User.change_username_and_phone_number(name, new_name, new_phone_number)
+>>>>>>> master
 
 
 def create_bank_account():
     """Akbar"""
+<<<<<<< HEAD
     pass
+=======
+    with open("users_json.json", "r") as f:
+        user_json = json.load(f)
+
+    id_user = user_json[name]["id_user"]
+    balance = int(input("Enter Balance : "))
+    password = input("Enter password : ")
+    cvv2 = input("Enter CVV2 : ")
+    BankAccount.creat_bank_account(id_user, balance, password, cvv2)
+
+
+def change_password(name):
+    """Hesel"""
+    password = getpass.getpass(stream=sys.stderr, prompt="Enter Password : ")
+    new_password = getpass.getpass(stream=sys.stderr, prompt="Enter New_Password : ")
+    re_new_password = getpass.getpass(stream=sys.stderr, prompt="Enter Re_New_Password : ")
+    User.change_password(name, password, new_password, re_new_password)
+>>>>>>> master
 
 
 def change_password(name):
