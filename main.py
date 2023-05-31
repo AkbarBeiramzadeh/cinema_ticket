@@ -10,18 +10,17 @@ from datetime import datetime
 import logging, logging.config
 
 #logging.config.fileConfig("log.ini")
-pattern = logging.Formatter("%(asctime)s - %(levelname)s - %(lineno)d - %(msg)s")
 
+logging.basicConfig(level=logging.INFO, filename="cinematicket.log", filemode="w",
+                    format="%(asctime)s - %(levelname)s - %(lineno)d - %(msg)s")
+logger = logging.getLogger("main")
 
-logger = logging.getLogger("MyLogger")
-logging.basicConfig(level=logging.INFO, filename="cinematicket.log", filemode="w")
-
-file_handler = logging.FileHandler("cinematicket.log", mode="a")
+file_handler = logging.FileHandler("cinematicket.log")
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.INFO)
+pattern = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(msg)s")
 console_handler.setFormatter(pattern)
 file_handler.setFormatter(pattern)
-
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
@@ -34,7 +33,7 @@ def register():
     """
     name = input("Enter Your Name :")
     if User.is_user(name):
-        logger.error("This Name is taken already")
+        logger.error("This Name is already taken")
         return
     password = getpass.getpass(stream=sys.stderr, prompt="Enter Password : ")
     phone_number = input("Enter phone (optional): ")
