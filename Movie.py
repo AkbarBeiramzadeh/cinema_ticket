@@ -12,8 +12,8 @@ class DateTimeEncoder(json.JSONEncoder):
 
 
 class Movie:
+    
     movies_dict = {}
-
     NOW = datetime.now()
 
     def __init__(self, id_manager, name: str, scr_date: datetime, seats_capacity: int, price: float,
@@ -26,6 +26,7 @@ class Movie:
         self.price = price
         self.age_group = age_group
         self.id_movie = uuid4().hex
+
 
     #   *********************************************************************************
 
@@ -144,6 +145,3 @@ class Movie:
         if age < movie["age_group"]:
             return False
         return True
-
-
-

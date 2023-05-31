@@ -45,7 +45,9 @@ def edit_user(name):
     new_name = input("Enter Your New Name :")
     new_phone_number = input("Enter Your New Phone Number :")
     if new_phone_number == "":
+
         new_phone_number = None
+
     User.change_username_and_phone_number(name, new_name, new_phone_number)
 
 
@@ -152,7 +154,7 @@ def login():
                 case "2":
                     edit_user()
                 case "3":
-                    change_password()
+                    change_password(name)
                 case "4":
                     create_bank_account(name)
                 case "5":
