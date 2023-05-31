@@ -5,6 +5,8 @@ from manager import Manager
 import getpass
 import sys
 from datetime import datetime
+import BankAccount
+import Movie
 
 
 def register():
@@ -79,7 +81,8 @@ def charge_wallet():
 
 def show_my_movies():
     """Hesel"""
-    pass
+    show_my_movies(id_user)
+    Movie.
 
 
 def show_my_subscription_type():
