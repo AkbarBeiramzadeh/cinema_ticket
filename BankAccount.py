@@ -111,28 +111,34 @@ class BankAccount:
      
 
     @classmethod
-    def creat_bank_account(cls, id_user, balance, password, cvv2):
-        if cls.balance_is_valid(balance):
-            if id_user not in cls.user_bank_account_dict:
-                cls.user_bank_account_json_dict[id_user] = {}
-                cls.user_bank_account_dict[id_user] = {}
-            bank_account = cls(id_user, balance, password, cvv2)
-            cls.user_bank_account_json_dict[id_user][bank_account.id_bank_account] = {
-            "bank account id": bank_account.id_bank_account, "balance": balance, "password": password, "cvv2": cvv2
-            }
-            cls.user_bank_account_dict[id_user][bank_account.id_bank_account] = bank_account
-            json_string = json.dumps(cls.user_bank_account_json_dict)
-            with open("bank_account.json", "w+") as f:
-                f.write(json_string)
-            return bank_account 
+    def creat_bank_account(cls, id_user, balance, bank_password, cvv2):
+        if len(bank_password) >= 4:   
+            if cls.balance_is_valid(balance):
+                if id_user not in cls.user_bank_account_dict.keys():
+                    cls.user_bank_account_json_dict[id_user] = {}
+                    cls.user_bank_account_dict[id_user] = {}
+                bank_account = cls(id_user, balance, bank_password, cvv2)
+                cls.user_bank_account_json_dict[id_user][bank_account.id_bank_account] = {
+                "bank account id": bank_account.id_bank_account, "balance": balance, "bank_password": bank_password, "cvv2": cvv2
+                }
+                cls.user_bank_account_dict[id_user][bank_account.id_bank_account] = bank_account
+                creat_bank_account_json_string = json.dumps(cls.user_bank_account_json_dict)
+                with open("bank_account.json", "w+") as f:
+                    f.write(creat_bank_account_json_string)
+                return bank_account 
+        else:
+            raise ValueError("Enter at least four characters for password")        
 
 
-
-
-
-
-
-
-    
-
-
+    @classmethod
+    def show_bank_account(cls, id_user):     
+        if os.path.exists("bank_account.json"):
+            with open("bank_account.json", "r") as f:
+                bank_account_of_user_json = json.load(f)
+            if id_user in bank_account_of_user_json.keys():
+                for id_of_bank in bank_account_of_user_json[id_user]:
+                    print("id of bank account: ", id_of_bank)
+            else:
+                raise Exception("You have not Bank Account")
+        else:
+            raise Exception("You have not Bank Account")
