@@ -5,8 +5,8 @@ from manager import Manager
 import getpass
 import sys
 from datetime import datetime
-import BankAccount
-import Movie
+from BankAccount import BankAccount
+from Movie import Movie
 
 
 def register():
@@ -81,8 +81,10 @@ def charge_wallet():
 
 def show_my_movies():
     """Hesel"""
-    show_my_movies(id_user)
-    Movie.
+    with open("users_json.json", "r") as f:
+        user_json = json.load(f)
+    id_user = user_json[name]["id_user"]    
+    Movie.show_my_movies(id_user)
 
 
 def show_my_subscription_type():
@@ -155,9 +157,19 @@ def show_movies():
     pass
 
 
-def creat_movie():
+def creat_movie(manager_name):
     """Hesel"""
-    pass
+    with open("manager.json", "r") as f:
+        manager_informations_json = json.load(f)
+    id_manager = manager_informations_json[manager_name]["id_manager"] 
+    movie_name = input("Enter movie_name: ")
+    scr_date = datetime.strptime(
+    input("Enter Screening_datetime with 'yyyy-mm-dd  hh:mm:ss' format: "), '%Y-%m-%d %H:%M:%S'
+    ) 
+    seats_capacity = int(input("Enter seats_capacity: "))
+    price = float(input("Enter price of movie: ")) 
+    age_group = int(input("Enter age_group limitation for the movie: "))
+    Movie.create_movie(id_manager, movie_name, scr_date, seats_capacity, price, age_group)
 
 
 def login_manager():
