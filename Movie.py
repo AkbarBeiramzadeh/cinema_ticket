@@ -12,6 +12,7 @@ class DateTimeEncoder(json.JSONEncoder):
 class Movie:
     
     movies_dict = {}
+    users_movies = {}
     NOW = datetime.now()
     
     def __init__(self, id_manager, name: str, scr_date: datetime, seats_capacity: int, price: float, age_group: int) -> None:
@@ -68,18 +69,32 @@ class Movie:
         movie["seats_capacity"] -= 1
         with open('movies_dict.json', 'w') as f2:
             json.dump(movies, f2)   
-               
+    
+    # adding movie to users movies list      
+        with open('users_movies.json', 'w+') as f3:      
+            list_movies = cls.users_movies[name]
+            list_movies.append(movie_name)
+            json.dump(cls.users_movies, f3)       
 #   ********************************************************************************
-#     @staticmethod
-#     def show_my_movies(user): 
+    @staticmethod
+    def show_my_movies(name):
+        with open("users_movies.json", "r") as f2:
+            users_movies = json.load(f2)
+        
+        for each in users_movies:
+            if each == name:
+                print(users_movies[each])
   
 
  #   ********************************************************************************
-    # @staticmethod
-    # def show_movies(user): 
-    #     pass
-
-        
+    @staticmethod
+    def show_movies(): 
+        with open("movies_dict.json", "r") as f2:
+            movies = json.load(f2)   
+        print("ON SCREEN MOVIES:")
+        for movie in movies:
+            print(movie)
+                 
 #   ******************************************************************************** 
     @staticmethod
     def apply_discount(movie,user):
@@ -126,5 +141,5 @@ class Movie:
         return True
     
         
-               
+            
     
