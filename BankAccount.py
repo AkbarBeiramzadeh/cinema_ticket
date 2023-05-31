@@ -69,26 +69,23 @@ class BankAccount:
                     raise Exception("balance is not enough") 
 
 
-    def add_to_balance(self, amount):
-        if type(self).amount_is_valid(amount):
-            self._balance += amount
-
-
-    def sub_from_balance(self, amount):
-        if type(self).amount_is_valid(amount):    
-            if self._balance - amount > self.__min_balance:
-                self._balance -= amount
-            else:    
-                raise Exception("balance is not enough")  
-
-
-    def transfer(self, other: "BankAccount", amount: int):
-        if type(self).amount_is_valid(amount):
-            if self._balance - self.__commission - amount > self.__min_balance:
-                self._balance -=( amount + self.__commission)
-                other._balance += amount
-            else:
-                raise Exception("balance is not enough")
+    @classmethod
+    def transfer(cls, wallet, id_user, id_bank_account, bank_password, cvv2, amount):
+        if cls.check_bank_password_and_cvv2_and_id_bank_account_validity(id_user, id_bank_account, bank_password, cvv2):
+            with open("bank_account.json", "r") as f:
+                bank_account_of_user_json = json.load(f)
+                balance = bank_account_of_user_json[id_user][id_bank_account]["balance"]
+            if cls.amount_is_valid(amount):
+                if balance - amount - cls.__commission > cls.__min_balance:
+                    balance -= ( amount + cls.__commission)
+                    new_wallet = wallet + amount                
+                    bank_account_of_user_json[id_user][id_bank_account]["balance"] = balance
+                    creat_bank_account_json_string = json.dumps(bank_account_of_user_json)
+                    with open("bank_account.json", "w+") as f:
+                        f.write(creat_bank_account_json_string) 
+                    return new_wallet    
+                else:    
+                    raise Exception("balance is not enough") 
 
 
     def password_validation(self, password):
