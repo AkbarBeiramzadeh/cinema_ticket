@@ -78,6 +78,26 @@ def show_wallet(name: str):
     print(User.show_wallet(name)) 
 
 
+def charge_wallet(name):
+    """subs from balance and adds to wallet"""
+    amount = input("How much do you wanna charge your wallet? ")
+    show_bank_account(name)
+    id_bank_account = input("Enter one of id_bank_accounts_for_charge_wallet: ")
+    bank_password = input("Enter bank_password: ")
+    cvv2 = input("Entr cvv2:")
+    with open("users_json.json", "r") as f:
+        user_json = json.load(f)
+    id_user = user_json[name]["id_user"]            
+    with open("users_json.json", "r") as f2:
+        users = json.load(f2)
+        if users[name] == name:
+            wallet = users[name]["wallet"]                     
+            new_wallet = BankAccount.transfer(wallet, id_user, id_bank_account, bank_password, cvv2, amount)
+            users[name]["wallet"] = new_wallet
+            users_string = json.dumps(users)  
+            f2.write(users_string)     
+
+
 def show_my_movies():
     """Hesel"""
     with open("users_json.json", "r") as f:
