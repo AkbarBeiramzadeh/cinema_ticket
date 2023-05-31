@@ -36,9 +36,9 @@ def show_users_info(name):
     """Mahsa"""
     with open("users_json.json", "r") as f:
         user_json = json.load(f)
-        
-    user = user_json[name]
-    User.show_info(user)            # undefined method
+
+    id_user = user_json[name]["id_user"]
+    User.show_info(id_user)            # undefined method
 
 
 def edit_user(name):
@@ -71,9 +71,12 @@ def change_password(name):
 
 
 def show_bank_account(name):
-    """Mahsa"""
-     
-    # BankAccount.show_my_accounts(user,amount)
+    """Shows list of user's bank accounts""" 
+    with open("users_json.json", "r") as f:
+        user_json = json.load(f)
+
+    id_user = user_json[name]["id_user"]
+    BankAccount.show_bank_account(id_user)
 
 
 def show_wallet():
@@ -83,12 +86,11 @@ def show_wallet():
 
 def charge_wallet(name):
     """Mahsa"""
-    with open("users_json.json", "r") as f:
-        user_json = json.load(f)
-        
-    user = user_json[name]
-    amount = input("How much do you wanna charge your wallet? ")
-    BankAccount.sub_from_balance(user, amount)
+    # with open("users_json.json", "r") as f:
+    #     user_json = json.load(f)
+
+    # amount = input("How much do you wanna charge your wallet? ")
+   
 
 def show_my_movies():
     """Hesel"""
@@ -163,8 +165,7 @@ def login():
 
 
 def show_movies():
-    """Mahsa"""
-    print("on screen movies: ")
+    """Shows list of available movies"""
     Movie.show_movies()
 
 

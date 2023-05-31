@@ -33,10 +33,11 @@ class User:
                     f"{register_date.year}-{register_date.month}-{register_date.day}",
                 "phone": phone_number}
             
-            # creating users_movie json
+            # creating users_movie json -----------
             with open('users_movies.json', 'w+') as f3:
                 cls.users_movies[name] = []
                 json.dump(cls.users_movies, f3)            
+            # -------------------------------------
             
             # storing to the json file
             json_string = json.dumps(cls.users_dict)
