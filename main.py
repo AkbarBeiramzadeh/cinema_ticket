@@ -5,8 +5,24 @@ from manager import Manager
 import getpass
 import sys
 from datetime import datetime
+
 from BankAccount import BankAccount
 from Movie import Movie
+import logging
+
+logging.basicConfig(level=logging.INFO, filename="cinematicket.log",
+                    format="%(asctime)s - %(levelname)s - %(lineno)d - %(msg)s")
+logger = logging.getLogger("main")
+
+#file_handler = logging.FileHandler("cinematicket.log")
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+pattern = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(msg)s")
+console_handler.setFormatter(pattern)
+#file_handler.setFormatter(pattern)
+logger.addHandler(console_handler)
+#logger.addHandler(file_handler)
+
 
 
 def register():
@@ -17,7 +33,7 @@ def register():
     """
     name = input("Enter Your Name :")
     if User.is_user(name):
-        print("This Name is taken already")
+        logger.error("This name already taken")
         return
     password = getpass.getpass(stream=sys.stderr, prompt="Enter Password : ")
     phone_number = input("Enter phone (optional): ")
@@ -26,9 +42,9 @@ def register():
     birth_date = datetime.strptime(birth_date_str, '%Y-%m-%d')
     try:
         User.sign_up(name, password, birth_date, register_date, phone_number)
-        print("The User Registered Successfully!!!")
+        logger.info("The User Registered Successfully!!!")
     except Exception:
-        print("User not registered")
+        logger.exception("User not registered")
 
 
 def show_users_info(name):
@@ -121,7 +137,7 @@ def show_my_subscription_type(name):
 def buy_movie(name):
     """Akbar"""
     show_movies()
-    print("Enter the name of the movie you want ")
+    logger.info("Enter the name of the movie you want ")
     film_name = input("film_name : ")
     Movie.buy_movie(name, film_name)
 
@@ -176,9 +192,14 @@ def login():
 
 
         else:
+
             print("Wrong Password!!!")
+
+            logger.error("Wrong Password!!!")
+
+
     else:
-        print("Invalid Name")
+        logger.error("Invalid Name")
 
 
 def show_movies():
@@ -204,7 +225,7 @@ def creat_movie(manager_name):
 def login_manager():
     manager_name = input("Enter your Name : ")
     if not Manager.is_manger(manager_name):
-        print("Invalid manager name")
+        logger.error("Invalid manager name")
         return
     password = input("Enter Password : ")
     if Manager.check_password(manager_name, password):
@@ -224,7 +245,7 @@ def login_manager():
             case "3":
                 return
     else:
-        print("Wrong Password!!!")
+        logger.error("Wrong Password!!!")
 
 
 def main():

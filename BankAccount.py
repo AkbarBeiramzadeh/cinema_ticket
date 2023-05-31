@@ -1,6 +1,20 @@
 from uuid import uuid4
 import json
 import os
+import logging
+
+logging.basicConfig(level=logging.INFO, filename="cinematicket.log",
+                    format="%(asctime)s - %(levelname)s - %(lineno)d - %(msg)s")
+logger = logging.getLogger("bankaccount")
+
+file_handler = logging.FileHandler("cinematicket.log")
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+pattern = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(msg)s")
+console_handler.setFormatter(pattern)
+file_handler.setFormatter(pattern)
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
 
 
 class BankAccount:
@@ -25,6 +39,7 @@ class BankAccount:
         if amount > 0:
             return True
         else:
+            logger.exception("Negative amount")
             raise Exception("The amount value is negative")
 
 
@@ -33,6 +48,7 @@ class BankAccount:
         if balance > cls.__min_balance:
             return True
         else:
+            logger.error("NOT enough balance")
             raise Exception("The minimum balance is not enough")
 
 
@@ -50,6 +66,7 @@ class BankAccount:
                 with open("bank_account.json", "w+") as f:
                     f.write(creat_bank_account_json_string)
             else:
+                logger.error("NOT enough balance")
                 raise Exception("balance is not enough")
 
 
@@ -67,6 +84,7 @@ class BankAccount:
                     with open("bank_account.json", "w+") as f:
                         f.write(creat_bank_account_json_string)
                 else:
+                    logger.error("NOT enough balance")
                     raise Exception("balance is not enough")
 
 
@@ -86,6 +104,7 @@ class BankAccount:
                         f.write(creat_bank_account_json_string)
                     return new_wallet
                 else:
+                    logger.error("NOT enough balance")
                     raise Exception("balance is not enough")
 
     @classmethod
@@ -102,12 +121,17 @@ class BankAccount:
                             return True
                         else:
 
+                            logger.error("Wrong CCV2")
+                            
                             raise Exception("The cvv2 is not valid")
                     else:
+                        logger.error("unvalid password")
                         raise Exception("The password is not valid")
                 else:
+                    logger.error("unvalid band ID")
                     raise Exception("The id_bankaccount is not valid")
             else:
+                logger.error("you don't have a bank account")
                 raise Exception("You have not Bank Account")
 
     @classmethod
@@ -129,6 +153,7 @@ class BankAccount:
                     f.write(creat_bank_account_json_string)
                 return bank_account
         else:
+            logger.error("enter four characters and more")
             raise ValueError("Enter at least four characters for password")
 
     @classmethod
@@ -140,6 +165,10 @@ class BankAccount:
                 for id_of_bank in bank_account_of_user_json[id_user]:
                     print("id of bank account: ", id_of_bank)
             else:
+                logger.error("you don't have a bank account")
                 raise Exception("You have not Bank Account")
         else:
+
+            logger.error("you don't have a bank account")
             raise Exception("You have not Bank Account")
+

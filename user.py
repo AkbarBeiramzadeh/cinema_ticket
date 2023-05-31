@@ -1,6 +1,20 @@
 from uuid import uuid4
 import json
 import os
+import logging
+
+logging.basicConfig(level=logging.INFO, filename="cinematicket.log",
+                    format="%(asctime)s - %(levelname)s - %(lineno)d - %(msg)s")
+logger = logging.getLogger("user")
+
+file_handler = logging.FileHandler("cinematicket.log")
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+pattern = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(msg)s")
+console_handler.setFormatter(pattern)
+file_handler.setFormatter(pattern)
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
 
 
 class User:
@@ -18,6 +32,9 @@ class User:
         self.phone_number = phone_number
         # if self.users_dict[name] in self.users_dict.keys():
         #     self.id_user = self.users_dict[name]["id_user"]
+        #logger.info('created user: {} - {} - {} - {} - {} - {} - {}'.format(self.name, self.password, self.birth_date,
+        #                                                                    self.register_date, self.wallet, self.subscription,
+        #                                                                    self.phone_number))
 
     @classmethod
     def sign_up(cls, name, password, birth_date, register_date, phone_number=None):
@@ -50,6 +67,7 @@ class User:
                 f.write(json_string)
 
             return cls(name, password, birth_date, register_date, phone_number)
+        logger.exception("Wrong info")
         raise Exception
 
 
@@ -69,6 +87,7 @@ class User:
     def check_password(cls, name, password):
         if cls.users_dict[name]["password"] == password:
             return True
+        logger.error("wrong password")
         return False
 
     @staticmethod
@@ -97,7 +116,8 @@ class User:
             with open("users_json.json", "w+") as f:
                 f.write(json_string)
         else:
-            raise Exception("The name is exsist. try again")
+            logger.exception("this name already exist")
+            raise Exception("The name is exist. try again")
 
 
     @staticmethod
@@ -126,8 +146,12 @@ class User:
             json_string = json.dumps(cls.users_dict)
             with open("users_json.json", "w+") as f:
                 f.write(json_string)
+
         else:
-            raise Exception("The name is exsist. try again")    
+
+        logger.exception("this name already exist")
+        raise Exception("The name is exsist. try again")
+
 
 
     @classmethod
@@ -144,9 +168,10 @@ class User:
                         f.write(json_string)
 
                 else:
-                  
+                    logger.exception("new_password and re_new_password is not equal")
                     raise Exception("new_password and re_new_password is not equal")
             else:
+                logger.exception("not enough character")
                 raise Exception("Enter at least four characters for password")
 
 
