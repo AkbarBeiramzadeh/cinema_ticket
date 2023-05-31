@@ -64,19 +64,18 @@ def change_password(name):
     User.change_password(name, password, new_password, re_new_password)
 
 
-def show_bank_account():
-    """Mahsa"""
-    pass
+def show_bank_account(name):
+    """Shows list of user's bank accounts""" 
+    with open("users_json.json", "r") as f:
+        user_json = json.load(f)
+
+    id_user = user_json[name]["id_user"]
+    BankAccount.show_bank_account(id_user)
 
 
-def show_wallet():
+def show_wallet(name: str):
     """Akbar"""
-    pass
-
-
-def charge_wallet():
-    """Mahsa"""
-    pass
+    print(User.show_wallet(name)) 
 
 
 def show_my_movies():
@@ -87,14 +86,17 @@ def show_my_movies():
     Movie.show_my_movies(id_user)
 
 
-def show_my_subscription_type():
+def show_my_subscription_type(name):
     """Akbar"""
-    pass
+    print(User.show_subscription_type(name))
 
 
-def buy_movie():
+def buy_movie(name):
     """Akbar"""
-    pass
+    show_movies()
+    print("Enter the name of the movie you want ")
+    film_name = input("film_name : ")
+    Movie.buy_movie(name,film_name)
 
 
 def login():
