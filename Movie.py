@@ -12,7 +12,7 @@ class DateTimeEncoder(json.JSONEncoder):
 class Movie:
     
     movies_dict = {}
-    users_movies = {}
+    
     NOW = datetime.now()
     
     def __init__(self, id_manager, name: str, scr_date: datetime, seats_capacity: int, price: float, age_group: int) -> None:
@@ -70,11 +70,13 @@ class Movie:
         with open('movies_dict.json', 'w') as f2:
             json.dump(movies, f2)   
     
-    # adding movie to users movies list      
-        with open('users_movies.json', 'w+') as f3:      
-            list_movies = cls.users_movies[name]
-            list_movies.append(movie_name)
-            json.dump(cls.users_movies, f3)       
+    # adding movie to users movies list  
+        with open("users_json.json", "r") as f3:
+             my_dict = json.load(f3)  
+             list_movies = my_dict[name]
+             list_movies.append(movie_name)  
+        with open('users_movies.json', 'w') as f3:    
+            json.dump(my_dict, f3)       
 #   ********************************************************************************
     @staticmethod
     def show_my_movies(name):
