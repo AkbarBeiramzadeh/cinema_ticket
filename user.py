@@ -5,6 +5,7 @@ import os
 
 class User:
     users_dict = {}
+    users_movies = {}
 
     def __init__(self, name, password, birth_date, register_date, phone_number=None):
         self.name = name
@@ -31,6 +32,12 @@ class User:
                 "register_date":
                     f"{register_date.year}-{register_date.month}-{register_date.day}",
                 "phone": phone_number}
+            
+            # creating users_movie json
+            with open('users_movies.json', 'w+') as f3:
+                cls.users_movies[name] = []
+                json.dump(cls.users_movies, f3)            
+            
             # storing to the json file
             json_string = json.dumps(cls.users_dict)
             with open("users_json.json", "w+") as f:
