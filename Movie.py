@@ -41,13 +41,13 @@ class Movie:
         self.age_group = age_group
         self.id_movie = uuid4().hex
 
+#   *********************************************************************************
 
     #   *********************************************************************************
 
     @classmethod
     def create_movie(cls, id_manager, movie_name: str, scr_date: datetime, seats_capacity: int, price: float,
                      age_group: int):
-
         cls.movies_dict[movie_name] = {
             "id_movie": uuid4().hex,
             "id_manager": id_manager,
@@ -69,7 +69,6 @@ class Movie:
         with open("movies_dict.json", "r") as f2:
             movies = json.load(f2)
             movie = movies[movie_name]
-
         if cls.check_capacity(movie) == False:
             logger.error("Sold out")
             raise Exception("all tickets have been sold")
@@ -80,7 +79,7 @@ class Movie:
             logger.error("not appropriate")
             raise Exception("this movie isn't appropriate for you")
 
-        price = cls.apply_discount
+        price = cls.apply_discount(movie, user)
         user["wallet"] -= price
         user_json[name] = user
         with open('users_json.json', 'w') as f1:
@@ -105,7 +104,6 @@ class Movie:
     def show_my_movies(name):
         with open("users_movies.json", "r") as f2:
             users_movies = json.load(f2)
-
         for each in users_movies:
             if each == name:
                 print(users_movies[each])
@@ -127,13 +125,13 @@ class Movie:
         ry, rm, rd = user["register_date"].split("-")
         by, bm, bd = user["register_date"].split("-")
 
-        month_passed = NOW.month - rm
-        if bm == NOW.month and bd == NOW.day:
+        month_passed = NOW.month - int(rm)
+        if int(bm) == NOW.month and int(bd) == NOW.day:
             price = movie["price"] / 2
             return price
 
         price = (1 - month_passed) * movie["price"]
-        return price
+        return price 
 
     #   *********************************************************************************
     @staticmethod

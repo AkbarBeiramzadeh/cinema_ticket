@@ -2,11 +2,12 @@ import json
 import os
 from user import User
 from manager import Manager
-from BankAccount import BankAccount
-from Movie import Movie
 import getpass
 import sys
 from datetime import datetime
+
+from BankAccount import BankAccount
+from Movie import Movie
 import logging
 
 logging.basicConfig(level=logging.INFO, filename="cinematicket.log",
@@ -21,6 +22,7 @@ console_handler.setFormatter(pattern)
 #file_handler.setFormatter(pattern)
 logger.addHandler(console_handler)
 #logger.addHandler(file_handler)
+
 
 
 def register():
@@ -65,11 +67,10 @@ def edit_user(name):
     User.change_username_and_phone_number(name, new_name, new_phone_number)
 
 
-def create_bank_account(name: str):
+def create_bank_account(name):
     """Akbar"""
     with open("users_json.json", "r") as f:
         user_json = json.load(f)
-
     id_user = user_json[name]["id_user"]
     balance = int(input("Enter Balance : "))
     password = input("Enter password : ")
@@ -87,6 +88,7 @@ def change_password(name):
 
 def show_bank_account(name):
     """Shows list of user's bank accounts"""
+
     with open("users_json.json", "r") as f:
         user_json = json.load(f)
 
@@ -184,14 +186,17 @@ def login():
                 case "10":
                     show_my_subscription_type(name)
                 case "11":
-                    buy_movie()
+                    buy_movie(name)
                 case "12":
                     return
 
 
-
         else:
+
+            print("Wrong Password!!!")
+
             logger.error("Wrong Password!!!")
+
 
     else:
         logger.error("Invalid Name")

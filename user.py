@@ -53,11 +53,13 @@ class User:
                 "subscription": "Boronz",
                 "phone": phone_number}
 
+
             # creating users_movie json -----------
             with open('users_movies.json', 'w+') as f3:
                 cls.users_movies[name] = []
                 json.dump(cls.users_movies, f3)
             # -------------------------------------
+
 
             # storing to the json file
             json_string = json.dumps(cls.users_dict)
@@ -67,6 +69,7 @@ class User:
             return cls(name, password, birth_date, register_date, phone_number)
         logger.exception("Wrong info")
         raise Exception
+
 
     @classmethod
     def is_user(cls, user_name):
@@ -117,39 +120,58 @@ class User:
             raise Exception("The name is exist. try again")
 
 
+    @staticmethod
+    def show_wallet(name):
+        with open("users_json.json", "r") as f:
+            user_json = json.load(f)
+        return user_json[name]["wallet"]
+
+    @staticmethod
+    def show_subscription_type(name):
+        with open("users_json.json", "r") as f:
+            user_json = json.load(f)
+        return user_json[name]["subscription"]
+
+
     @classmethod
     def change_username_and_phone_number(cls, name, new_name, new_phone_number= None):
 
         """
         This function changes the username and phone number
         """  
-        if not cls.users_dict.keys(new_name):
+        if new_name not in cls.users_dict.keys():
             cls.users_dict[new_name] = cls.users_dict.pop(name)
-            cls.users_dict[new_name].name = new_name
-            cls.users_dict[new_name].phone_number = new_phone_number
+            cls.users_dict[new_name]["phone"] = new_phone_number
+            name = new_name
             json_string = json.dumps(cls.users_dict)
             with open("users_json.json", "w+") as f:
                 f.write(json_string)
+
+        else:
+
         logger.exception("this name already exist")
         raise Exception("The name is exsist. try again")
 
 
+
     @classmethod
+
     def change_password(cls, name, password, new_password, re_new_password):
         if cls.check_password(name, password):
 
             if len(new_password) >= 4:
                 if new_password == re_new_password:
-
+                    cls.users_dict[name]["password"] = new_password
                     password = new_password
-                    cls.users_dict[name]["password"] == password
                     json_string = json.dumps(cls.users_dict)
                     with open("users_json.json", "w+") as f:
                         f.write(json_string)
+
                 else:
                     logger.exception("new_password and re_new_password is not equal")
                     raise Exception("new_password and re_new_password is not equal")
             else:
                 logger.exception("not enough character")
                 raise Exception("Enter at least four characters for password")
+
 
