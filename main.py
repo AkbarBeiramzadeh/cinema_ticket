@@ -34,11 +34,11 @@ def register():
 
 def show_users_info(name):
     """Mahsa"""
-    with open("users_json.json", "r") as f:
-        user_json = json.load(f)
+    # with open("users_json.json", "r") as f:
+    #     user_json = json.load(f)
 
-    id_user = user_json[name]["id_user"]
-    User.show_info(id_user)            # undefined method
+    # id_user = user_json[name]["id_user"]
+    # User.show_info(id_user)            # undefined method
 
 
 def edit_user(name):
@@ -85,12 +85,19 @@ def show_wallet():
 
 
 def charge_wallet(name):
-    """Mahsa"""
-    # with open("users_json.json", "r") as f:
-    #     user_json = json.load(f)
-
-    # amount = input("How much do you wanna charge your wallet? ")
-   
+    """subs from balance and adds to wallet"""
+    amount = input("How much do you wanna charge your wallet? ")
+    with open("bank_account.json", "r") as f1:
+        accounts = json.load(f1)
+        # id_user = accounts[name]["id_user"]
+        # if accounts[name] == name:
+                   
+    with open("users_json.json", "r") as f2:
+        users = json.load(f2)
+        if users[name] == name:
+            users[name]["wallet"] += amount
+            
+            
 
 def show_my_movies():
     """Hesel"""
