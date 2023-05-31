@@ -83,9 +83,12 @@ def show_my_subscription_type(name):
     print(User.show_subscription_type(name))
 
 
-def buy_movie():
+def buy_movie(name):
     """Akbar"""
-    pass
+    show_movies()
+    print("Enter the name of the movie you want ")
+    film_name = input("film_name : ")
+    Movie.buy_movie(name,film_name)
 
 
 def login():
@@ -146,8 +149,8 @@ def login():
 
 
 def show_movies():
-    """Mahsa"""
-    pass
+    """Shows list of available movies"""
+    Movie.show_movies()
 
 
 def creat_movie():
