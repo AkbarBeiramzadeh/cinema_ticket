@@ -51,7 +51,7 @@ def edit_user(name):
     User.change_username_and_phone_number(name, new_name, new_phone_number)
 
 
-def create_bank_account():
+def create_bank_account(name):
     """Akbar"""
     with open("users_json.json", "r") as f:
         user_json = json.load(f)
@@ -156,7 +156,7 @@ def login():
                 case "3":
                     change_password(name)
                 case "4":
-                    create_bank_account()
+                    create_bank_account(name)
                 case "5":
                     show_bank_account(name)
                 case "6":
@@ -170,7 +170,7 @@ def login():
                 case "10":
                     show_my_subscription_type(name)
                 case "11":
-                    buy_movie()
+                    buy_movie(name)
                 case "12":
                     return
 

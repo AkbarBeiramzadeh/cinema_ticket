@@ -137,10 +137,8 @@ class User:
 
             if len(new_password) >= 4:
                 if new_password == re_new_password:
-
-
+                    cls.users_dict[name]["password"] = new_password
                     password = new_password
-                    cls.users_dict[name]["password"] == password
                     json_string = json.dumps(cls.users_dict)
                     with open("users_json.json", "w+") as f:
                         f.write(json_string)

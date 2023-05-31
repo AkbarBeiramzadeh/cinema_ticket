@@ -62,7 +62,7 @@ class Movie:
         if cls.check_age(user, movie) == False:
             raise Exception("this movie isn't appropriate for you")
 
-        price = cls.apply_discount
+        price = cls.apply_discount(movie, user)
         user["wallet"] -= price
         user_json[name] = user
         with open('users_json.json', 'w') as f1:
@@ -108,13 +108,13 @@ class Movie:
         ry, rm, rd = user["register_date"].split("-")
         by, bm, bd = user["register_date"].split("-")
 
-        month_passed = NOW.month - rm
-        if bm == NOW.month and bd == NOW.day:
+        month_passed = NOW.month - int(rm)
+        if int(bm) == NOW.month and int(bd) == NOW.day:
             price = movie["price"] / 2
             return price
 
         price = (1 - month_passed) * movie["price"]
-        return price
+        return price 
 
     #   *********************************************************************************
     @staticmethod
