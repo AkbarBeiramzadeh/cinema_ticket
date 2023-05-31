@@ -1,5 +1,6 @@
 import json
 import os
+from uuid import uuid4
 
 
 class Manager:
@@ -12,7 +13,8 @@ class Manager:
     @classmethod
     def create_manager(cls, name, password):
         if name not in cls.manager_json_dict.keys():
-            cls.manager_json_dict[name] = password
+            id_manager = uuid4().hex
+            cls.manager_json_dict[name] = {"id_manager": id_manager, "password": password}
             # storing to the json file
             json_string = json.dumps(cls.manager_json_dict)
             with open("manager.json", "w+") as f:
@@ -20,8 +22,8 @@ class Manager:
             return cls(name, password)
         raise Exception("Error")
 
-    @classmethod
-    def is_manger(cls, name):
+    @staticmethod
+    def is_manger(name):
         if os.path.exists("manager.json"):
             with open("manager.json", "r") as f:
                 manager_dict = json.load(f)
@@ -29,11 +31,11 @@ class Manager:
                 return True
         return False
 
-    @classmethod
-    def check_password(cls, name, password):
+    @staticmethod
+    def check_password(name, password):
         if os.path.exists("manager.json"):
             with open("manager.json", "r") as f:
                 manager_dict = json.load(f)
-            if manager_dict[name] == password:
+            if manager_dict[name]["password"] == password:
                 return True
         return False
