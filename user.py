@@ -30,6 +30,7 @@ class User:
                 "birth_date": f"{birth_date.year}-{birth_date.month}-{birth_date.day}",
                 "register_date":
                     f"{register_date.year}-{register_date.month}-{register_date.day}",
+                "wallet": 0,
                 "phone": phone_number}
             # storing to the json file
             json_string = json.dumps(cls.users_dict)
