@@ -78,9 +78,9 @@ def show_my_movies():
     pass
 
 
-def show_my_subscription_type():
+def show_my_subscription_type(name):
     """Akbar"""
-    pass
+    print(User.show_subscription_type(name))
 
 
 def buy_movie():
@@ -130,7 +130,7 @@ def login():
                 case "9":
                     show_my_movies()
                 case "10":
-                    show_my_subscription_type()
+                    show_my_subscription_type(name)
                 case "11":
                     buy_movie()
                 case "12":

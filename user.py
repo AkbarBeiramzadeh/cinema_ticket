@@ -5,6 +5,7 @@ import os
 
 class User:
     users_dict = {}
+    subscription = ["Boronz", "Silver", "Gold"]
 
     def __init__(self, name, password, birth_date, register_date, phone_number=None):
         self.name = name
@@ -12,7 +13,7 @@ class User:
         self.birth_date = birth_date
         self.register_date = register_date
         self.wallet = 0
-        self.subscription = 0
+        self.subscription = type(self).subscription[0]
         self.phone_number = phone_number
         # if self.users_dict[name] in self.users_dict.keys():
         #     self.id_user = self.users_dict[name]["id_user"]
@@ -31,6 +32,7 @@ class User:
                 "register_date":
                     f"{register_date.year}-{register_date.month}-{register_date.day}",
                 "wallet": 0,
+                "subscription": "Boronz",
                 "phone": phone_number}
             # storing to the json file
             json_string = json.dumps(cls.users_dict)
@@ -64,3 +66,8 @@ class User:
             user_json = json.load(f)
         return user_json[name]["wallet"]
 
+    @staticmethod
+    def show_subscription_type(name):
+        with open("users_json.json", "r") as f:
+            user_json = json.load(f)
+        return user_json[name]["subscription"]
